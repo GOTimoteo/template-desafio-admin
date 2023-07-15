@@ -1,5 +1,5 @@
 interface Analyst {
-  id: string;
+  id: number;
   user_id: string;
   email: string;
   password: string;
