@@ -1,5 +1,3 @@
-import React, { useEffect, useState } from "react";
-import logo from "./logo.svg";
 import "./App.css";
 import Router from "routes";
 
@@ -14,20 +12,6 @@ import Router from "routes";
  */
 
 function App() {
-  const [users, setUsers] = useState([]);
-  const url =
-    process.env.NODE_ENV === "production"
-      ? "/api"
-      : "http://localhost:3001/api";
-
-  useEffect(() => {
-    fetch(`${url}/users`)
-      .then(function (response) {
-        return response.json();
-      })
-      .then(setUsers);
-  }, [url]);
-
   return (
     <div className="App">
       <Router />

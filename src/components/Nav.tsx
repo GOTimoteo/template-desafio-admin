@@ -12,8 +12,9 @@ const Nav = () => {
 
   const navLinks = [
     { label: "Home", href: "/" },
-    { label: "Login", href: "/login" },
+    { label: "Users", href: "/users" },
     { label: "Audits", href: "/audits" },
+    { label: "Login", href: "/login" },
   ];
 
   return (
