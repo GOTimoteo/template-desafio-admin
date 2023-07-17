@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAudits } from "../actions/auditAction";
-import { changeCardStatus } from "actions/cardAction";
+import { changeCardStatus, removeCard } from "actions/cardAction";
 
 const auditSlice = createSlice({
   name: "audits",
@@ -24,7 +24,9 @@ const auditSlice = createSlice({
         state.error = action.error.message;
       })
       .addCase(changeCardStatus.fulfilled, (state, { payload }) => {
-        console.log(payload, "AUDIT PAYLOAD");
+        state.audits = [...state.audits, payload.audit];
+      })
+      .addCase(removeCard.fulfilled, (state, { payload }) => {
         state.audits = [...state.audits, payload.audit];
       });
   },

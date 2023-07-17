@@ -1,7 +1,8 @@
-import { changeCardStatus, fetchCards } from "actions/cardAction";
+import { changeCardStatus, fetchCards, removeCard } from "actions/cardAction";
 import Button from "components/Button";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { useEffect } from "react";
+import { FaTrashAlt } from "react-icons/fa";
 
 const Home = () => {
   const dispatch = useAppDispatch();
@@ -12,6 +13,7 @@ const Home = () => {
 
   const cards = useAppSelector((state) => state.cards.cards);
   const cardsStatus = useAppSelector((state) => state.cards.status);
+  const userId = useAppSelector((state) => state.analysts.loggedAnalyst.id);
 
   const onCardStatusChange = (card: Card, newStatus: string) => {
     const newCard = {
@@ -27,11 +29,27 @@ const Home = () => {
           type: "status_alterado",
           before: card,
           after: newCard,
-          requestedBy: 113, // TODO: Insert logged user ID
+          requestedBy: userId,
         },
       })
     );
   };
+
+  const onDeleteCard = (card: Card) => {
+    dispatch(
+      removeCard({
+        id: card.id,
+        audit: {
+          createdAt: new Date().toISOString(),
+          type: "cartao_removido",
+          before: card,
+          after: undefined,
+          requestedBy: userId,
+        },
+      })
+    );
+  };
+
   return (
     <div>
       <h1>Home</h1>
@@ -61,6 +79,13 @@ const Home = () => {
                   </Button>
                 </>
               )}
+              <Button
+                onClick={() => onDeleteCard(card)}
+                isLoading={cardsStatus === "loading"}
+                variant="secondary"
+              >
+                <FaTrashAlt />
+              </Button>
             </div>
           ))}
         </>

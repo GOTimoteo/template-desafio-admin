@@ -1,5 +1,6 @@
 import { analystActions } from "actions/analystAction";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { useLocalStorage } from "hooks/useLocalStorage";
 import { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
@@ -22,6 +23,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
   const { analysts } = useAppSelector((state) => state.analysts);
   const { loggedAnalyst } = useAppSelector((state) => state.analysts);
+  const [auth, setAuth] = useLocalStorage("auth"); // TODO: remove localstorage and add redux-persist
 
   const login = (email: string, password: string) => {
     const analyst = analysts.find((analyst) => analyst.email === email);
@@ -30,6 +32,8 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     if (analyst.password !== password)
       return { isLogged: false, status: "Invalid password" };
+
+    setAuth(analyst);
 
     dispatch(analystActions.setLoggedAnalyst(analyst));
 
@@ -41,7 +45,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   return (
-    <AuthContext.Provider value={{ analyst: loggedAnalyst, login, logout }}>
+    <AuthContext.Provider value={{ analyst: auth, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

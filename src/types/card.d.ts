@@ -2,7 +2,7 @@ interface Card {
   createdAt: string;
   updatedAt: string;
   status: string;
-  id: string;
+  id: number;
   user_id: User["id"];
   metadatas: {
     name: string;

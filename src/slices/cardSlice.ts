@@ -1,5 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
-import { changeCardStatus, fetchCards } from "../actions/cardAction";
+import {
+  changeCardStatus,
+  fetchCards,
+  removeCard,
+} from "../actions/cardAction";
 
 const cardSlice = createSlice({
   name: "cards",
@@ -11,7 +15,7 @@ const cardSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchCards.pending, (state, action) => {
+      .addCase(fetchCards.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchCards.fulfilled, (state, action) => {
@@ -33,6 +37,21 @@ const cardSlice = createSlice({
         state.cards = newState;
       })
       .addCase(changeCardStatus.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
+      .addCase(removeCard.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(removeCard.fulfilled, (state, { meta }) => {
+        state.status = "succeeded";
+        state.cards.splice(
+          state.cards.findIndex(({ id }) => id === meta.arg.id),
+          1
+        );
+        console.log(state.cards, "CARDS", meta.arg);
+      })
+      .addCase(removeCard.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error.message;
       });

@@ -1,6 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import cardSlice from "../slices/cardSlice";
-import { getCards, putCard } from "../services/cards";
+import { deleteCard, getCards, putCard } from "../services/cards";
 import { postAudit } from "services/audits";
 
 export const cardActions = cardSlice.actions;
@@ -20,5 +20,14 @@ export const changeCardStatus = createAsyncThunk(
     } catch (error) {
       throw new Error("Failed to fetch data");
     }
+  }
+);
+
+export const removeCard = createAsyncThunk(
+  "cards/removeCard",
+  async ({ id, audit }: { id: Card["id"]; audit: Omit<Audit, "id"> }) => {
+    const cardResponse = await deleteCard(id);
+    const auditResponse = await postAudit(audit);
+    return { card: cardResponse, audit: auditResponse };
   }
 );
