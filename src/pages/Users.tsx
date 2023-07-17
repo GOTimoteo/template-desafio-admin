@@ -9,8 +9,7 @@ const Users = () => {
     dispatch(fetchUsers());
   }, [dispatch]);
 
-  const users = useAppSelector((state) => state.users.users);
-  const usersStatus = useAppSelector((state) => state.users.status);
+  const { users, status: usersStatus } = useAppSelector((state) => state.users);
 
   return (
     <div>

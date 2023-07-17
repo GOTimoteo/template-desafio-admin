@@ -1,24 +1,35 @@
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 
 import { useAuth } from "contexts/auth";
 import { useLocation, useNavigate } from "react-router-dom";
 import routeNames from "routes/routeNames.json";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
+import { fetchAnalysts } from "actions/analystAction";
 
 const Login = () => {
-  const [analystName, setAnalystname] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [infoMessage, setInfoMessage] = useState("");
   const { login, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+  const dispatch = useAppDispatch();
+  const { status: analystsStatus } = useAppSelector((state) => state.analysts);
+
+  useEffect(() => {
+    dispatch(fetchAnalysts());
+  }, [dispatch]);
 
   const handleLogin = useCallback(
     (e) => {
       e.preventDefault();
-      login();
-      location?.state?.from
-        ? navigate(location.state.from)
-        : navigate(routeNames.HOME);
+      login(email, password).isLogged &&
+        (location?.state?.from
+          ? navigate(location.state.from)
+          : navigate(routeNames.HOME));
+      setInfoMessage(login(email, password).status);
     },
-    [login, location?.state?.from, navigate]
+    [login, email, password, location?.state?.from, navigate]
   );
 
   const handleLogout = useCallback(
@@ -32,17 +43,27 @@ const Login = () => {
   return (
     <div>
       <h1>Login page</h1>
-      <form onSubmit={handleLogin}>
-        <input
-          value={analystName}
-          onChange={(e) => setAnalystname(e.target.value)}
-          placeholder="username"
-        />
-        <button type="submit">Login</button>
-        <button type="button" onClick={handleLogout}>
-          Logout
-        </button>
-      </form>
+      {analystsStatus === "loading" ? (
+        "LOADING"
+      ) : (
+        <form onSubmit={handleLogin}>
+          <input
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder={infoMessage || "username"}
+          />
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            placeholder="password"
+            type="password"
+          />
+          <button type="submit">Login</button>
+          <button type="button" onClick={handleLogout}>
+            Logout
+          </button>
+        </form>
+      )}
     </div>
   );
 };

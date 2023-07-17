@@ -1,4 +1,5 @@
-import { useLocalStorage } from "hooks/useLocalStorage";
+import { analystActions } from "actions/analystAction";
+import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { createContext, useContext } from "react";
 import type { ReactNode } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
@@ -6,8 +7,11 @@ import routeNames from "routes/routeNames.json";
 
 const AuthContext = createContext(
   {} as {
-    analyst: Analyst | null;
-    login: () => void;
+    analyst: Analyst;
+    login: (
+      email: string,
+      password: string
+    ) => { isLogged: boolean; status: string };
     logout: () => void;
   }
 );
@@ -15,24 +19,29 @@ const AuthContext = createContext(
 export const useAuth = () => useContext(AuthContext);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [analyst, setAnalyst] = useLocalStorage<Analyst | null>("analyst");
+  const dispatch = useAppDispatch();
+  const { analysts } = useAppSelector((state) => state.analysts);
+  const { loggedAnalyst } = useAppSelector((state) => state.analysts);
 
-  const login = () => {
-    setAnalyst({
-      id: "Id do analista",
-      user_id: "Id do usuário",
-      email: "Email de autenticação do analista",
-      password: "Senha do analista",
-      roles: "Cada role representa um grupo de acesso",
-    });
+  const login = (email: string, password: string) => {
+    const analyst = analysts.find((analyst) => analyst.email === email);
+
+    if (!analyst) return { isLogged: false, status: "User not found" };
+
+    if (analyst.password !== password)
+      return { isLogged: false, status: "Invalid password" };
+
+    dispatch(analystActions.setLoggedAnalyst(analyst));
+
+    return { isLogged: true, status: "" };
   };
 
   const logout = () => {
-    setAnalyst(null);
+    dispatch(analystActions.setLoggedAnalyst({} as Analyst));
   };
 
   return (
-    <AuthContext.Provider value={{ analyst, login, logout }}>
+    <AuthContext.Provider value={{ analyst: loggedAnalyst, login, logout }}>
       {children}
     </AuthContext.Provider>
   );
@@ -42,7 +51,7 @@ export const RequireAuth = () => {
   const { analyst } = useAuth();
   const location = useLocation();
 
-  if (!analyst) {
+  if (Object.keys(analyst).length === 0) {
     return (
       <Navigate
         to={{ pathname: routeNames.LOGIN }}
