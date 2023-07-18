@@ -1,14 +1,14 @@
 import React, { useState } from "react";
 
-type FormValues = {
+interface FormValues {
   name: string;
   digits: number;
   limit: number;
-};
+}
 
-type CardFormProps = {
+interface CardFormProps {
   onCreateCard: (formValues: FormValues) => void;
-};
+}
 
 const CardForm = ({ onCreateCard }: CardFormProps) => {
   const [formValues, setFormValues] = useState<FormValues>({} as FormValues);

@@ -5,7 +5,7 @@ interface ButtonProps {
   onClick: (event: MouseEvent<HTMLButtonElement>) => void;
   isLoading?: boolean;
   isDisabled?: boolean;
-  variant?: "primary" | "secondary";
+  color: "green" | "red" | "gray";
 }
 
 const Button = ({
@@ -13,21 +13,23 @@ const Button = ({
   onClick,
   isLoading,
   isDisabled,
-  variant = "primary",
+  color,
 }: ButtonProps) => {
-  const buttonStyles = `
-    py-2 px-4 rounded font-bold text-white
-    ${
-      variant === "primary"
-        ? "bg-green-500 hover:bg-green-700"
-        : "bg-red-500 hover:bg-red-700"
-    }
-    ${isDisabled || isLoading ? "opacity-50 cursor-not-allowed" : ""}
-  `;
+  const buttonStyles = {
+    green: `text-white font-semibold py-1 px-2 rounded bg-green-500 hover:bg-green-600 ${
+      isDisabled || isLoading ? "opacity-50 cursor-not-allowed" : ""
+    }`,
+    red: `text-white font-semibold py-1 px-2 rounded bg-red-500 hover:bg-red-600 ${
+      isDisabled || isLoading ? "opacity-50 cursor-not-allowed" : ""
+    }`,
+    gray: `text-white font-semibold py-1 px-2 rounded bg-gray-500 hover:bg-gray-600 ${
+      isDisabled || isLoading ? "opacity-50 cursor-not-allowed" : ""
+    }`,
+  };
 
   return (
     <button
-      className={buttonStyles}
+      className={buttonStyles[color]}
       onClick={onClick}
       disabled={isDisabled || isLoading}
     >
