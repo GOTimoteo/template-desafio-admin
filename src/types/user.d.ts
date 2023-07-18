@@ -4,7 +4,7 @@ interface User {
   birthDate: string;
   createdAt: string;
   updatedAt: string;
-  enabledFeatures: string;
+  enabledFeatures: Feature["id"][];
   document: string;
   metadatas: {
     validDocument: string;
@@ -12,5 +12,5 @@ interface User {
   };
   address: string;
   salaryBase: string;
-  id: string;
+  id: number;
 }

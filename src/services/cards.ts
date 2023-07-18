@@ -1,5 +1,8 @@
 import instance from "./api";
 
+export const postCard = (payload: Omit<Card, "id">) =>
+  instance.post(`/cards`, payload).then(({ data }) => data);
+
 export const getCards = () => instance.get("/cards").then(({ data }) => data);
 
 export const putCard = (payload: Card) =>

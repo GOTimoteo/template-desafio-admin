@@ -31,10 +31,4 @@ const analystSlice = createSlice({
   },
 });
 
-export const selectAnalystByEmail = (email: Analyst["email"]) =>
-  createSelector(
-    (state: RootState) => state.analysts.analysts,
-    (analysts) => analysts.find((analyst) => analyst.email === email)
-  );
-
 export default analystSlice;

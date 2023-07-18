@@ -1,6 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import { fetchAudits } from "../actions/auditAction";
-import { changeCardStatus, removeCard } from "actions/cardAction";
+import { changeCardStatus, createCard, removeCard } from "actions/cardAction";
 
 const auditSlice = createSlice({
   name: "audits",
@@ -12,7 +12,7 @@ const auditSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchAudits.pending, (state, action) => {
+      .addCase(fetchAudits.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchAudits.fulfilled, (state, action) => {
@@ -27,6 +27,9 @@ const auditSlice = createSlice({
         state.audits = [...state.audits, payload.audit];
       })
       .addCase(removeCard.fulfilled, (state, { payload }) => {
+        state.audits = [...state.audits, payload.audit];
+      })
+      .addCase(createCard.fulfilled, (state, { payload }) => {
         state.audits = [...state.audits, payload.audit];
       });
   },

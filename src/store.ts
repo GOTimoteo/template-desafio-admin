@@ -1,8 +1,9 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
-import userSlice from "./slices/userSlice";
+import userSlice from "slices/userSlice";
 import cardSlice from "slices/cardSlice";
 import auditSlice from "slices/auditSlice";
 import analystSlice from "slices/analystSlice";
+import featureSlice from "slices/featureSlice";
 
 export const store = configureStore({
   reducer: combineReducers({
@@ -10,6 +11,7 @@ export const store = configureStore({
     cards: cardSlice.reducer,
     audits: auditSlice.reducer,
     analysts: analystSlice.reducer,
+    features: featureSlice.reducer,
   }),
 });
 

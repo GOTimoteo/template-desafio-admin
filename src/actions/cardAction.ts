@@ -1,9 +1,28 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import cardSlice from "../slices/cardSlice";
-import { deleteCard, getCards, putCard } from "../services/cards";
+import { deleteCard, getCards, postCard, putCard } from "../services/cards";
 import { postAudit } from "services/audits";
 
 export const cardActions = cardSlice.actions;
+
+export const createCard = createAsyncThunk(
+  "cards/createCard",
+  async ({
+    card,
+    audit,
+  }: {
+    card: Omit<Card, "id">;
+    audit: Omit<Audit, "id">;
+  }) => {
+    try {
+      const cardResponse = await postCard(card);
+      const auditResponse = await postAudit({ ...audit, after: cardResponse });
+      return { card: cardResponse, audit: auditResponse };
+    } catch (error) {
+      throw new Error("Failed to fetch data");
+    }
+  }
+);
 
 export const fetchCards = createAsyncThunk("cards/fetchAllCards", async () => {
   const response = await getCards();

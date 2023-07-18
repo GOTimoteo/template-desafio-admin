@@ -1,6 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 import {
   changeCardStatus,
+  createCard,
   fetchCards,
   removeCard,
 } from "../actions/cardAction";
@@ -15,6 +16,17 @@ const cardSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
+      .addCase(createCard.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(createCard.fulfilled, (state, { payload }) => {
+        state.status = "succeeded";
+        state.cards.push(payload.card);
+      })
+      .addCase(createCard.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message;
+      })
       .addCase(fetchCards.pending, (state) => {
         state.status = "loading";
       })
@@ -49,7 +61,6 @@ const cardSlice = createSlice({
           state.cards.findIndex(({ id }) => id === meta.arg.id),
           1
         );
-        console.log(state.cards, "CARDS", meta.arg);
       })
       .addCase(removeCard.rejected, (state, action) => {
         state.status = "failed";

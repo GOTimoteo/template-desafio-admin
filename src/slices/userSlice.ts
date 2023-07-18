@@ -1,5 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSelector, createSlice } from "@reduxjs/toolkit";
 import { fetchUsers } from "../actions/userAction";
+import { RootState } from "store";
 
 const userSlice = createSlice({
   name: "users",
@@ -11,7 +12,7 @@ const userSlice = createSlice({
   reducers: {},
   extraReducers(builder) {
     builder
-      .addCase(fetchUsers.pending, (state, action) => {
+      .addCase(fetchUsers.pending, (state) => {
         state.status = "loading";
       })
       .addCase(fetchUsers.fulfilled, (state, action) => {
@@ -24,5 +25,20 @@ const userSlice = createSlice({
       });
   },
 });
+
+export const makeSelectCardEnabledUsers = () => {
+  const selectUsers = (state: RootState) => state.users.users;
+  const selectFeatures = (state: RootState) => state.features.features;
+  const selectCardFeatures = createSelector(
+    [selectFeatures],
+    (features) => features.find(({ name }) => name === "card")?.id
+  );
+
+  return createSelector([selectUsers, selectCardFeatures], (users, features) =>
+    users.filter(({ enabledFeatures }) =>
+      features !== undefined ? enabledFeatures.includes(features) : false
+    )
+  );
+};
 
 export default userSlice;
