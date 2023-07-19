@@ -1,16 +1,22 @@
 interface User {
-  name: string;
-  email: string;
-  birthDate: string;
-  createdAt: string;
-  updatedAt: string;
-  enabledFeatures: Feature["id"][];
-  document: string;
-  metadatas: {
-    validDocument: string;
-    verified: string;
-  };
-  address: string;
-  salaryBase: string;
   id: number;
+  name: string;
+  document: number;
+  email: string;
+  BirthDate: string;
+  createdAt: string;
+  updatedAt?: string;
+  enabledFeatures: Feature["id"][];
+  metadatas: {
+    validDocument: boolean;
+    verified: boolean;
+  };
+  address: {
+    streetNumber: number;
+    city: string;
+    state: string;
+    neighborhood: string;
+    postalCode: string;
+  };
+  salaryBase: number;
 }

@@ -1,4 +1,5 @@
 import { fetchUsers } from "actions/userAction";
+import UserList from "components/UserList";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { useEffect } from "react";
 
@@ -14,15 +15,7 @@ const Users = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Usuários</h1>
-      {usersStatus === "loading" ? (
-        "LOADING"
-      ) : (
-        <>
-          {users.map((user) => (
-            <div key={user.id}>{user.name}</div>
-          ))}
-        </>
-      )}
+      {usersStatus === "loading" ? "LOADING" : <UserList users={users} />}
     </div>
   );
 };
