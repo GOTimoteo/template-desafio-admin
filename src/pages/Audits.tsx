@@ -14,7 +14,7 @@ const Audits = () => {
 
   return (
     <div>
-      <h1>Audits</h1>
+      <h1 className="text-2xl text-gray-700 mb-4">Auditorias</h1>
       {auditsStatus === "loading" ? (
         "LOADING"
       ) : (
