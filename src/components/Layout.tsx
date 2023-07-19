@@ -5,7 +5,9 @@ const Layout = () => {
   return (
     <>
       <Nav />
-      <Outlet />
+      <div className="mt-4 px-[2vw] md:px-[6vw] xl:px-[10vw]">
+        <Outlet />
+      </div>
     </>
   );
 };

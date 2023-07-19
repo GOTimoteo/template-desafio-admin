@@ -1,4 +1,5 @@
 import React, { MouseEvent } from "react";
+import { AiOutlineLoading3Quarters } from "react-icons/ai";
 
 interface ButtonProps {
   children: React.ReactNode;
@@ -33,7 +34,13 @@ const Button = ({
       onClick={onClick}
       disabled={isDisabled || isLoading}
     >
-      {isLoading ? "Loading..." : children}
+      {isLoading ? (
+        <div className="animate-spin">
+          <AiOutlineLoading3Quarters />
+        </div>
+      ) : (
+        children
+      )}
     </button>
   );
 };

@@ -42,7 +42,7 @@ const Login = () => {
 
   return (
     <div>
-      <h1>Login page</h1>
+      <h1 className="text-2xl text-gray-700 mb-4">Login</h1>
       {analystsStatus === "loading" ? (
         "LOADING"
       ) : (

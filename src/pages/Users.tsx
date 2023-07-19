@@ -13,7 +13,7 @@ const Users = () => {
 
   return (
     <div>
-      <h1>Users</h1>
+      <h1 className="text-2xl text-gray-700 mb-4">Usuários</h1>
       {usersStatus === "loading" ? (
         "LOADING"
       ) : (

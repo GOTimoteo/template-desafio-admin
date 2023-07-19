@@ -19,8 +19,8 @@ const Nav = () => {
 
   return (
     <>
-      <nav className="bg-[#00a868] px-4 py-2">
-        <div className="flex items-center justify-between sm:mx-[10vw]">
+      <nav className="bg-stone-green-500 px-[2vw] md:px-[6vw] xl:px-[10vw] py-2">
+        <div className="flex items-center justify-between">
           <div className="flex items-center">
             <button
               className="text-white sm:hidden mr-2"
@@ -35,7 +35,7 @@ const Nav = () => {
           <div
             className={`sm:hidden ${
               isMenuOpen ? "fixed" : "hidden"
-            } top-0 right-0 left-0 bottom-0 bg-gray-800 z-10`}
+            } top-0 right-0 left-0 bottom-0 bg-stone-green-500 z-10`}
           >
             <ul className="flex flex-col items-center pt-12">
               {navLinks.map((link) => (
@@ -58,7 +58,7 @@ const Nav = () => {
               <IoClose />
             </button>
           </div>
-          <ul className="hidden sm:flex gap-8 sm:mt-2">
+          <ul className="hidden sm:flex gap-8">
             {navLinks.map((link) => (
               <li key={link.href} className="mr-4">
                 <Link className="text-white hover:text-gray-300" to={link.href}>
