@@ -1,9 +1,12 @@
-import React, { useState } from "react";
+import React, { useMemo, useState } from "react";
+import { useSelector } from "react-redux";
+import { makeSelectCardEnabledUsers } from "slices/userSlice";
 
-interface FormValues {
+export interface FormValues {
   name: string;
   digits: number;
   limit: number;
+  userId: number;
 }
 
 interface CardFormProps {
@@ -12,6 +15,9 @@ interface CardFormProps {
 
 const CardForm = ({ onCreateCard }: CardFormProps) => {
   const [formValues, setFormValues] = useState<FormValues>({} as FormValues);
+  const [selectedOption, setSelectedOption] = useState("");
+  const cardEnabledUsers = useMemo(makeSelectCardEnabledUsers, []);
+  const selectCardEnabledUsers = useSelector(cardEnabledUsers);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
@@ -26,8 +32,36 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
     onCreateCard(formValues);
   };
 
+  const SelectUsersDropdown = () => {
+    // TODO: Ao escalar, devido ao maior número de users, o interessante seria implementar um select que permite a busca por nome / id de user, carregando o dropdown com os resultados.
+    const handleSelectChange = (
+      event: React.ChangeEvent<HTMLSelectElement>
+    ) => {
+      setSelectedOption(event.target.value);
+    };
+
+    return (
+      <div>
+        <label htmlFor="select-option">Select an option:</label>
+        <select
+          id="select-option"
+          value={selectedOption}
+          onChange={handleSelectChange}
+        >
+          {selectCardEnabledUsers.map(({ id, name }) => (
+            <option key={id} value={id}>
+              {name}
+            </option>
+          ))}
+        </select>
+        <p>Selected option: {selectedOption}</p>
+      </div>
+    );
+  };
+
   return (
     <form onSubmit={handleSubmit}>
+      <SelectUsersDropdown />
       <div>
         <label htmlFor="name">Nome impresso no cartão usuário:</label>
         <input
