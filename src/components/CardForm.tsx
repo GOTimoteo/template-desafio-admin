@@ -29,7 +29,11 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    onCreateCard(formValues);
+    onCreateCard({
+      ...formValues,
+      digits: Number(formValues.digits),
+      limit: Number(formValues.limit),
+    });
   };
 
   const SelectUsersDropdown = () => {
