@@ -7,8 +7,10 @@ import { useState } from "react";
 import CardForm, { FormValues } from "./CardForm";
 import { useAppSelector } from "hooks/redux";
 import { AiOutlinePlus } from "react-icons/ai";
+import { formatDateTimeToDDMMYYYYHHMMSS } from "utils/masks/date";
+import { formatCurrency } from "utils/masks/money";
 
-interface CardProps {
+interface CardListProps {
   cards: Card[];
   onCreateCard: (formValues: FormValues) => void;
   onCardStatusChange: (card: Card, newStatus: string) => void;
@@ -20,12 +22,12 @@ const CardList = ({
   onCreateCard,
   onCardStatusChange,
   onDeleteCard,
-}: CardProps) => {
+}: CardListProps) => {
   const [modalOpen, setModalOpen] = useState(false);
   const cardsStatus = useAppSelector((state) => state.cards.status);
 
   return (
-    <div className="flex flex-col gap-2">
+    <div className="flex flex-col gap-2 mb-8">
       <button
         className="text-white font-semibold px-2 rounded bg-stone-green-500 hover:bg-stone-green-600 w-fit"
         onClick={() => setModalOpen(true)}
@@ -87,17 +89,17 @@ const CardList = ({
                   </div>
                 </div>
                 <div className="text-gray-700 text-base">
-                  <span className="font-semibold">R$ {limit}</span>
+                  <span className="font-semibold">{formatCurrency(limit)}</span>
                 </div>
               </div>
               <div className="flex justify-between gap-1 mt-auto p-4 bg-gray-200">
                 <div className="flex-1 text-left text-gray-700 text-xs">
-                  <div>Created At: </div>
-                  <div>{createdAt}</div>
+                  <div>Criado em: </div>
+                  <div>{formatDateTimeToDDMMYYYYHHMMSS(createdAt)}</div>
                 </div>
                 <div className="flex-1 text-left text-gray-700 text-xs">
-                  <div>Updated At: </div>
-                  <div>{updatedAt}</div>
+                  <div>Atualizado em: </div>
+                  <div>{formatDateTimeToDDMMYYYYHHMMSS(updatedAt)}</div>
                 </div>
               </div>
             </div>
@@ -105,7 +107,7 @@ const CardList = ({
         })}
       </div>
       <Modal isOpen={modalOpen} onClose={() => setModalOpen(false)}>
-        <h2>Modal Content</h2>
+        <h2 className="text-xl text-gray-700 my-2">Criar Pedido de Cartão</h2>
         <CardForm onCreateCard={onCreateCard} />
       </Modal>
     </div>
