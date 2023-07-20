@@ -8,6 +8,7 @@ interface CardListProps {
   cards: Card[];
   onCreateCard: (formValues: FormValues) => void;
   onCardStatusChange: (card: Card, newStatus: Card["status"]) => void;
+  onNameChange: (card: Card, name: Card["metadatas"]["name"]) => void;
   onDeleteCard: (card: Card) => void;
 }
 
@@ -16,6 +17,7 @@ const CardList = ({
   onCreateCard,
   onCardStatusChange,
   onDeleteCard,
+  onNameChange,
 }: CardListProps) => {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -36,6 +38,7 @@ const CardList = ({
             card={card}
             onCreateCard={onCreateCard}
             onCardStatusChange={onCardStatusChange}
+            onNameChange={onNameChange}
             onDeleteCard={onDeleteCard}
           />
         ))}

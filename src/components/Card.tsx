@@ -7,12 +7,14 @@ import { FaTrashAlt } from "react-icons/fa";
 import { TiTickOutline } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { cardStatusIcon } from "components/cardStatus";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { GiConfirmed } from "react-icons/gi";
 
 interface EditableCardProps {
   card: Card;
   onCreateCard: (formValues: FormValues) => void;
   onCardStatusChange: (card: Card, newStatus: Card["status"]) => void;
+  onNameChange: (card: Card, name: Card["metadatas"]["name"]) => void;
   onDeleteCard: (card: Card) => void;
   readOnly?: false;
 }
@@ -28,6 +30,18 @@ const Card = (props: CardProps) => {
   const { id, user_id, status, metadatas, createdAt, updatedAt } = props.card;
   const { name, limit, digits } = metadatas;
   const cardsStatus = useAppSelector((state) => state.cards.status);
+  const [displayName, setDisplayName] = useState(name);
+  const [isNameChanged, setIsNameChanged] = useState(false);
+
+  const handleDisplayNameChange = (
+    event: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    setDisplayName(event.target.value);
+  };
+
+  useEffect(() => {
+    setIsNameChanged(displayName !== name);
+  }, [displayName, setIsNameChanged, name]);
 
   return (
     <div
@@ -73,7 +87,28 @@ const Card = (props: CardProps) => {
         )}
       </div>
       <div className="px-6 text-gray-700 text-base text-left">
-        <span className="font-semibold">{user_id}</span> | {name}
+        <span className="font-semibold">{user_id}</span> |{" "}
+        {!props.readOnly ? (
+          <input
+            type="text"
+            id="name"
+            name="name"
+            value={displayName}
+            onChange={handleDisplayNameChange}
+            className="p-2 border border-gray-300 rounded-md"
+            required
+          />
+        ) : (
+          name
+        )}
+        {isNameChanged && !props.readOnly && (
+          <button
+            className="text-white px-3 p-2 h-full rounded bg-green-500"
+            onClick={() => props.onNameChange(props.card, displayName)}
+          >
+            <GiConfirmed />
+          </button>
+        )}
       </div>
       <div className="flex flex-wrap justify-between px-6 py-4">
         <div className="text-gray-700 text-base">

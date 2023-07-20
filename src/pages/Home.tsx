@@ -66,6 +66,26 @@ const Home = () => {
     );
   };
 
+  const onNameChange = (card: Card, name: Card["metadatas"]["name"]) => {
+    const newCard = {
+      ...card,
+      metadatas: { ...card.metadatas, name: name },
+      updatedAt: new Date().toISOString(),
+    };
+    dispatch(
+      changeCardStatus({
+        card: newCard,
+        audit: {
+          createdAt: new Date().toISOString(),
+          type: "nome_cartao_alterado",
+          before: card,
+          after: newCard,
+          requestedBy: analystId,
+        },
+      })
+    );
+  };
+
   const onDeleteCard = (card: Card) => {
     dispatch(
       removeCard({
@@ -94,6 +114,7 @@ const Home = () => {
             onCreateCard={onCreateCard}
             onCardStatusChange={onCardStatusChange}
             onDeleteCard={onDeleteCard}
+            onNameChange={onNameChange}
           />
         </>
       )}
