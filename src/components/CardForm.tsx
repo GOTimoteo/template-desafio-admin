@@ -6,7 +6,7 @@ export interface FormValues {
   name: string;
   digits: number;
   limit: number;
-  userId: number;
+  user_id: number;
 }
 
 interface CardFormProps {
@@ -33,6 +33,7 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
       ...formValues,
       digits: Number(formValues.digits),
       limit: Number(formValues.limit),
+      user_id: Number(selectedOption),
     });
   };
 
@@ -81,7 +82,7 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
           type="text"
           id="name"
           name="name"
-          value={formValues.name}
+          value={formValues.name || ""}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded-md"
           required
@@ -95,7 +96,7 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
           type="text"
           id="digits"
           name="digits"
-          value={formValues.digits}
+          value={formValues.digits || ""}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded-md"
           required
@@ -109,7 +110,7 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
           type="text"
           id="limit"
           name="limit"
-          value={formValues.limit}
+          value={formValues.limit || ""}
           onChange={handleChange}
           className="w-full p-2 border border-gray-300 rounded-md"
           required

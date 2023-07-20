@@ -10,7 +10,7 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [infoMessage, setInfoMessage] = useState("");
-  const { login, logout } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
   const dispatch = useAppDispatch();
@@ -32,35 +32,35 @@ const Login = () => {
     [login, email, password, location?.state?.from, navigate]
   );
 
-  const handleLogout = useCallback(
-    (e) => {
-      e.preventDefault();
-      logout();
-    },
-    [logout]
-  );
-
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Login</h1>
       {analystsStatus === "loading" ? (
         "LOADING"
       ) : (
-        <form onSubmit={handleLogin}>
+        <form
+          className="flex flex-col gap-2 items-center"
+          onSubmit={handleLogin}
+        >
           <input
+            className="text-center"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
-            placeholder={infoMessage || "username"}
+            placeholder={infoMessage || "email"}
           />
           <input
+            className="text-center"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            placeholder="password"
+            placeholder="senha"
             type="password"
           />
-          <button type="submit">Login</button>
-          <button type="button" onClick={handleLogout}>
-            Logout
+          <div className="text-red-500 font-semibold">{infoMessage}</div>
+          <button
+            className="w-28 max-w-xs text-white font-semibold py-1 px-2 rounded bg-stone-green-500 hover:bg-stone-green-600 "
+            type="submit"
+          >
+            Login
           </button>
         </form>
       )}

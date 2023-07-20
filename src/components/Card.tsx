@@ -9,6 +9,7 @@ import { RxCross2 } from "react-icons/rx";
 import { cardStatusIcon } from "components/cardStatus";
 import React, { useEffect, useState } from "react";
 import { GiConfirmed } from "react-icons/gi";
+import { useAuth } from "contexts/auth";
 
 interface EditableCardProps {
   card: Card;
@@ -32,6 +33,7 @@ const Card = (props: CardProps) => {
   const cardsStatus = useAppSelector((state) => state.cards.status);
   const [displayName, setDisplayName] = useState(name);
   const [isNameChanged, setIsNameChanged] = useState(false);
+  const { analyst } = useAuth();
 
   const handleDisplayNameChange = (
     event: React.ChangeEvent<HTMLInputElement>
@@ -76,17 +78,19 @@ const Card = (props: CardProps) => {
                 <RxCross2 />
               </Button>
             )}
-            <Button
-              onClick={() => props.onDeleteCard(props.card)}
-              isLoading={cardsStatus === "loading"}
-              color="gray"
-            >
-              <FaTrashAlt />
-            </Button>
+            {analyst.roles.includes("n2") && (
+              <Button
+                onClick={() => props.onDeleteCard(props.card)}
+                isLoading={cardsStatus === "loading"}
+                color="gray"
+              >
+                <FaTrashAlt />
+              </Button>
+            )}
           </div>
         )}
       </div>
-      <div className="px-6 text-gray-700 text-base text-left">
+      <div className="pl-6 text-gray-700 text-base text-left">
         <span className="font-semibold">{user_id}</span> |{" "}
         {!props.readOnly ? (
           <input
@@ -95,7 +99,7 @@ const Card = (props: CardProps) => {
             name="name"
             value={displayName}
             onChange={handleDisplayNameChange}
-            className="p-2 border border-gray-300 rounded-md"
+            className="px-2 border border-gray-300 rounded-md"
             required
           />
         ) : (
@@ -103,7 +107,7 @@ const Card = (props: CardProps) => {
         )}
         {isNameChanged && !props.readOnly && (
           <button
-            className="text-white px-3 p-2 h-full rounded bg-green-500"
+            className="text-white px-2 p-1 rounded bg-green-500"
             onClick={() => props.onNameChange(props.card, displayName)}
           >
             <GiConfirmed />
@@ -114,9 +118,11 @@ const Card = (props: CardProps) => {
         <div className="text-gray-700 text-base">
           <div className="text-gray-700 text-base text-left">{digits}</div>
         </div>
-        <div className="text-gray-700 text-base">
-          <span className="font-semibold">{formatCurrency(limit)}</span>
-        </div>
+        {analyst.roles.includes("n2") && (
+          <div className="text-gray-700 text-base">
+            <span className="font-semibold">{formatCurrency(limit)}</span>
+          </div>
+        )}
       </div>
       <div className="flex justify-between gap-1 mt-auto p-4 bg-gray-200">
         <div className="flex-1 text-left text-gray-700 text-xs">

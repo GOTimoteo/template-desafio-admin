@@ -2,10 +2,12 @@ import { useState } from "react";
 import { Link } from "react-router-dom";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { IoClose } from "react-icons/io5";
+import { useAuth } from "contexts/auth";
 
 const Nav = () => {
   const [isMenuOpen, setMenuOpen] = useState(false);
-
+  const { analyst } = useAuth();
+  const { logout } = useAuth();
   const toggleMenu = () => {
     setMenuOpen((prev) => !prev);
   };
@@ -16,6 +18,11 @@ const Nav = () => {
     { label: "Audits", href: "/audits" },
     { label: "Login", href: "/login" },
   ];
+
+  const handleLogout = () => {
+    toggleMenu();
+    logout();
+  };
 
   return (
     <>
@@ -49,6 +56,16 @@ const Nav = () => {
                   </Link>
                 </li>
               ))}
+              {Object.keys(analyst).length !== 0 && (
+                <li className="my-4">
+                  <button
+                    className="text-white hover:text-gray-300"
+                    onClick={handleLogout}
+                  >
+                    Logout
+                  </button>
+                </li>
+              )}
             </ul>
             <button
               className="absolute top-4 right-4 text-white"
@@ -61,11 +78,25 @@ const Nav = () => {
           <ul className="hidden sm:flex gap-8">
             {navLinks.map((link) => (
               <li key={link.href} className="mr-4">
-                <Link className="text-white hover:text-gray-300" to={link.href}>
+                <Link
+                  className="text-white hover:text-gray-300"
+                  to={link.href}
+                  onClick={toggleMenu}
+                >
                   {link.label}
                 </Link>
               </li>
             ))}
+            {Object.keys(analyst).length !== 0 && (
+              <li>
+                <button
+                  className="text-white hover:text-gray-300"
+                  onClick={handleLogout}
+                >
+                  Logout
+                </button>
+              </li>
+            )}
           </ul>
         </div>
       </nav>

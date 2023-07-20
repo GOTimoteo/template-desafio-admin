@@ -25,12 +25,13 @@ const Home = () => {
 
   // TODO: usecallback
   const onCreateCard = (formValues: FormValues) => {
+    const { user_id, ...metadatas } = formValues;
     const newCard: Omit<Card, "id"> = {
       createdAt: new Date().toISOString(),
       status: "requested",
       updatedAt: undefined,
-      metadatas: formValues,
-      user_id: Number(formValues.userId),
+      metadatas: metadatas,
+      user_id: user_id,
     };
     dispatch(
       createCard({

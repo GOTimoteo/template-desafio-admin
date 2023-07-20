@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import routeNames from "routes/routeNames.json";
 
-import { AuthProvider, RequireAuth } from "contexts/auth";
+import { AuthProvider, RequireAuth, RequireN2 } from "contexts/auth";
 import Layout from "components/Layout";
 import HomePage from "pages/Home";
 import UsersPage from "pages/Users";
@@ -17,7 +17,9 @@ const Router = () => {
             <Route element={<RequireAuth />}>
               <Route path={routeNames.HOME} element={<HomePage />} />
               <Route path={routeNames.USERS} element={<UsersPage />} />
-              <Route path={routeNames.AUDITS} element={<AuditsPage />} />
+              <Route element={<RequireN2 />}>
+                <Route path={routeNames.AUDITS} element={<AuditsPage />} />
+              </Route>
               {/* <Route path="*" element={<NotFoundPage />} /> */}
             </Route>
             <Route path={routeNames.LOGIN} element={<LoginPage />} />

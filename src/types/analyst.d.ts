@@ -3,5 +3,5 @@ interface Analyst {
   user_id: string;
   email: string;
   password: string;
-  roles: string;
+  roles: string[];
 }

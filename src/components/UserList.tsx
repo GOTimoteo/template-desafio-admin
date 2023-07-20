@@ -1,3 +1,4 @@
+import { useAuth } from "contexts/auth";
 import { useCallback, useState } from "react";
 import { BsChevronDown, BsChevronUp } from "react-icons/bs";
 import { formatCPF } from "utils/masks/cpf";
@@ -5,6 +6,7 @@ import {
   formatDateTimeToDDMMYYYYHHMMSS,
   formatDateToDDMMYYYY,
 } from "utils/masks/date";
+import { formatCurrency } from "utils/masks/money";
 
 interface UserListProps {
   users: User[];
@@ -13,6 +15,7 @@ interface UserListProps {
 const UserList = ({ users }: UserListProps) => {
   const [openItems, setOpenItems] = useState<number[]>([]);
   const [filterEmail, setFilterEmail] = useState("");
+  const { analyst } = useAuth();
 
   const handleFilterChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilterEmail(event.target.value);
@@ -100,9 +103,12 @@ const UserList = ({ users }: UserListProps) => {
                     <strong>Endereço:</strong>{" "}
                     {`${address.streetNumber}, ${address.neighborhood}, ${address.city}, ${address.state}, ${address.postalCode}`}
                   </div>
-                  <div>
-                    <strong>Salário Base:</strong> {salaryBase}
-                  </div>
+                  {analyst.roles.includes("n2") && (
+                    <div>
+                      <strong>Salário Base:</strong>{" "}
+                      {formatCurrency(salaryBase)}
+                    </div>
+                  )}
                 </div>
                 <div className="flex flex-col gap-2 grow">
                   <div>
