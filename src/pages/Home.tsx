@@ -25,7 +25,7 @@ const Home = () => {
 
   // TODO: usecallback
   const onCreateCard = (formValues: FormValues) => {
-    const newCard = {
+    const newCard: Omit<Card, "id"> = {
       createdAt: new Date().toISOString(),
       status: "requested",
       updatedAt: undefined,
@@ -46,7 +46,7 @@ const Home = () => {
     );
   };
 
-  const onCardStatusChange = (card: Card, newStatus: string) => {
+  const onCardStatusChange = (card: Card, newStatus: Card["status"]) => {
     const newCard = {
       ...card,
       status: newStatus,

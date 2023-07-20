@@ -1,5 +1,5 @@
 interface Audit {
-  id: string;
+  id: number;
   createdAt: string;
   type: string;
   before?: Card;

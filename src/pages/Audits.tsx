@@ -1,4 +1,5 @@
 import { fetchAudits } from "actions/auditAction";
+import AuditList from "components/AuditList";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { useEffect } from "react";
 
@@ -15,15 +16,7 @@ const Audits = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Auditorias</h1>
-      {auditsStatus === "loading" ? (
-        "LOADING"
-      ) : (
-        <>
-          {audits.map((audit) => (
-            <div key={audit.id}>{audit.id}</div>
-          ))}
-        </>
-      )}
+      {auditsStatus === "loading" ? "LOADING" : <AuditList audits={audits} />}
     </div>
   );
 };

@@ -1,6 +1,5 @@
-import { PayloadAction, createSelector, createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { fetchAnalysts } from "../actions/analystAction";
-import { RootState } from "store";
 
 const analystSlice = createSlice({
   name: "analysts",
