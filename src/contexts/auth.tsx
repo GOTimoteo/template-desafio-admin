@@ -47,7 +47,7 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
   };
 
   useEffect(() => {
-    if (Object.keys(auth).length !== 0)
+    if (auth && Object.keys(auth).length !== 0)
       dispatch(analystSlice.actions.setLoggedAnalyst(auth));
   }, [auth, dispatch]);
 
@@ -62,7 +62,7 @@ export const RequireAuth = () => {
   const { analyst } = useAuth();
   const location = useLocation();
 
-  if (Object.keys(analyst).length === 0) {
+  if (analyst && Object.keys(analyst).length === 0) {
     return (
       <Navigate
         to={{ pathname: routeNames.LOGIN }}

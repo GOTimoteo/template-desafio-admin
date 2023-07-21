@@ -56,7 +56,7 @@ const Nav = () => {
                   </Link>
                 </li>
               ))}
-              {Object.keys(analyst).length !== 0 && (
+              {analyst && Object.keys(analyst).length !== 0 && (
                 <li className="my-4">
                   <button
                     className="text-white hover:text-gray-300"
@@ -87,7 +87,7 @@ const Nav = () => {
                 </Link>
               </li>
             ))}
-            {Object.keys(analyst).length !== 0 && (
+            {analyst && Object.keys(analyst).length !== 0 && (
               <li>
                 <button
                   className="text-white hover:text-gray-300"
