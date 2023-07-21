@@ -110,9 +110,7 @@ const Home = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Solicitações de Cartões</h1>
-      {cardsStatus === "loading" || analystsStatus === "loading" ? (
-        "LOADING"
-      ) : (
+      {cardsStatus === "succeeded" && analystsStatus === "succeeded" ? (
         <>
           <CardList
             cards={cards}
@@ -122,6 +120,8 @@ const Home = () => {
             onNameChange={onNameChange}
           />
         </>
+      ) : (
+        "LOADING"
       )}
     </div>
   );
