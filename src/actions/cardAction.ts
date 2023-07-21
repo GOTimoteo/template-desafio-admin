@@ -1,9 +1,6 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import cardSlice from "../slices/cardSlice";
 import { deleteCard, getCards, postCard, putCard } from "../services/cards";
 import { postAudit } from "services/audits";
-
-export const cardActions = cardSlice.actions;
 
 export const createCard = createAsyncThunk(
   "cards/createCard",

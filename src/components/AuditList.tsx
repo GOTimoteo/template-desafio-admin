@@ -46,7 +46,7 @@ const AuditList = ({ audits }: AuditListProps) => {
                 {id} | {findAnalystNameById(requestedBy)}
               </strong>
               <strong className="sm:w-[20%] grow w-full">{type}</strong>
-              <strong className="sm:w-[30%] grow w-full overflow-hidden text-right">
+              <strong className="sm:w-[30%] grow w-full overflow-hidden lg:text-right">
                 {formatDateTimeToDDMMYYYYHHMMSS(createdAt)}
               </strong>
             </div>

@@ -1,12 +1,12 @@
-import { analystActions } from "actions/analystAction";
+import analystSlice from "slices/analystSlice";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
 import { useLocalStorage } from "hooks/useLocalStorage";
-import { createContext, useContext } from "react";
+import { createContext, useContext, useEffect } from "react";
 import type { ReactNode } from "react";
 import { useLocation, Navigate, Outlet } from "react-router-dom";
 import routeNames from "routes/routeNames.json";
 
-const AuthContext = createContext(
+export const AuthContext = createContext(
   {} as {
     analyst: Analyst;
     login: (
@@ -35,15 +35,20 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
     setAuth(analyst);
 
-    dispatch(analystActions.setLoggedAnalyst(analyst));
+    dispatch(analystSlice.actions.setLoggedAnalyst(analyst));
 
     return { isLogged: true, status: "" };
   };
 
   const logout = () => {
     setAuth({});
-    dispatch(analystActions.setLoggedAnalyst({} as Analyst));
+    dispatch(analystSlice.actions.setLoggedAnalyst({} as Analyst));
   };
+
+  useEffect(() => {
+    if (Object.keys(auth).length !== 0)
+      dispatch(analystSlice.actions.setLoggedAnalyst(auth));
+  }, [auth, dispatch]);
 
   return (
     <AuthContext.Provider value={{ analyst: auth, login, logout }}>

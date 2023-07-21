@@ -1,3 +1,4 @@
+import { fetchAnalysts } from "actions/analystAction";
 import { fetchAudits } from "actions/auditAction";
 import AuditList from "components/AuditList";
 import { useAppDispatch, useAppSelector } from "hooks/redux";
@@ -8,6 +9,7 @@ const Audits = () => {
 
   useEffect(() => {
     dispatch(fetchAudits());
+    dispatch(fetchAnalysts());
   }, [dispatch]);
 
   const audits = useAppSelector((state) => state.audits.audits);
