@@ -25,6 +25,8 @@ const Home = () => {
 
   const cards = useAppSelector((state) => state.cards.cards);
   const analystId = useAppSelector((state) => state.analysts.loggedAnalyst.id);
+  const cardsStatus = useAppSelector((state) => state.cards.status);
+  const analystsStatus = useAppSelector((state) => state.analysts.status);
 
   const onCreateCard = (formValues: FormValues) => {
     const { user_id, ...metadatas } = formValues;
@@ -108,7 +110,7 @@ const Home = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Solicitações de Cartões</h1>
-      {cards.length === 0 ? (
+      {cardsStatus === "loading" || analystsStatus === "loading" ? (
         "LOADING"
       ) : (
         <>

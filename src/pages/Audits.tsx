@@ -14,11 +14,16 @@ const Audits = () => {
 
   const audits = useAppSelector((state) => state.audits.audits);
   const auditsStatus = useAppSelector((state) => state.audits.status);
+  const analystsStatus = useAppSelector((state) => state.analysts.status);
 
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Auditorias</h1>
-      {auditsStatus === "loading" ? "LOADING" : <AuditList audits={audits} />}
+      {auditsStatus === "loading" || analystsStatus === "loading" ? (
+        "LOADING"
+      ) : (
+        <AuditList audits={audits} />
+      )}
     </div>
   );
 };
