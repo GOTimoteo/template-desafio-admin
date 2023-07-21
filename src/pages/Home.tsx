@@ -111,9 +111,10 @@ const Home = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Solicitações de Cartões</h1>
-      {cardsStatus === "succeeded" &&
-      featuresStatus === "succeeded" &&
-      userStatus === "succeeded" ? (
+      {(cardsStatus === "succeeded" &&
+        featuresStatus === "succeeded" &&
+        userStatus === "succeeded") ||
+      cards.length !== 0 ? (
         <>
           <CardList
             cards={cards}
