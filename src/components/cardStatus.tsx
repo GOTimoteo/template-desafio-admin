@@ -2,12 +2,6 @@ import { TiTickOutline } from "react-icons/ti";
 import { RxCross2 } from "react-icons/rx";
 import { BsQuestionLg } from "react-icons/bs";
 
-export const auditTypeIcon = {
-  cartao_adicionado: "a",
-  status_alterado: "a",
-  cartao_removido: "a",
-};
-
 type CardIconsMap = Record<Card["status"], React.ReactNode>;
 
 export const cardStatusIcon: CardIconsMap = {
