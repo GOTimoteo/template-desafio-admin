@@ -26,7 +26,8 @@ const Home = () => {
   const cards = useAppSelector((state) => state.cards.cards);
   const analystId = useAppSelector((state) => state.analysts.loggedAnalyst.id);
   const cardsStatus = useAppSelector((state) => state.cards.status);
-  const analystsStatus = useAppSelector((state) => state.analysts.status);
+  const featuresStatus = useAppSelector((state) => state.features.status);
+  const userStatus = useAppSelector((state) => state.users.status);
 
   const onCreateCard = (formValues: FormValues) => {
     const { user_id, ...metadatas } = formValues;
@@ -110,7 +111,9 @@ const Home = () => {
   return (
     <div>
       <h1 className="text-2xl text-gray-700 mb-4">Solicitações de Cartões</h1>
-      {cardsStatus === "succeeded" && analystsStatus === "succeeded" ? (
+      {cardsStatus === "succeeded" &&
+      featuresStatus === "succeeded" &&
+      userStatus === "succeeded" ? (
         <>
           <CardList
             cards={cards}
