@@ -44,7 +44,6 @@
     "start:kill": "pm2 kill",
     "test": "jest"
   },
-  "proxy": "https://template-desafio-admin.vercel.app",
   "eslintConfig": {
     "extends": [
       "react-app",
