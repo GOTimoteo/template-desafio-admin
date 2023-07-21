@@ -50,7 +50,7 @@ const UserList = ({ users }: UserListProps) => {
           className="p-2 border border-gray-300 rounded-md w-64"
         />
       </div>
-      {filteredData.map(
+      {filteredData?.map(
         ({
           id,
           name,

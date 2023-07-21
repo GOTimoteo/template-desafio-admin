@@ -33,7 +33,7 @@ const AuditList = ({ audits }: AuditListProps) => {
 
   return (
     <div className="flex flex-col gap-2 mb-8">
-      {audits.map(({ id, createdAt, requestedBy, type, before, after }) => (
+      {audits?.map(({ id, createdAt, requestedBy, type, before, after }) => (
         <div key={id} className="border rounded-md bg-stone-green-600 py-2">
           <div
             className="p-2 bg-gray-100 text-gray-600 cursor-pointer"

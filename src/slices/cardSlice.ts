@@ -43,7 +43,7 @@ const cardSlice = createSlice({
       })
       .addCase(changeCardStatus.fulfilled, (state, { payload }) => {
         state.status = "succeeded";
-        const newState = state.cards.map((card) =>
+        const newState = state.cards?.map((card) =>
           card.id === payload.card.id ? payload.card : card
         );
         state.cards = newState;

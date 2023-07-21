@@ -63,7 +63,7 @@ const CardForm = ({ onCreateCard }: CardFormProps) => {
             {" "}
             -- selecione um usuário --{" "}
           </option>
-          {selectCardEnabledUsers.map(({ id, name }) => (
+          {selectCardEnabledUsers?.map(({ id, name }) => (
             <option key={id} value={id}>
               {name}
             </option>
