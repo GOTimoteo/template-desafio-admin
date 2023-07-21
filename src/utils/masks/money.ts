@@ -5,3 +5,5 @@ export const formatCurrency = (value?: number) => {
     currency: "BRL",
   });
 };
+
+// TODO: Função pode ser parametrizada para formatar em diversas moedas

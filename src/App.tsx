@@ -19,4 +19,6 @@ function App() {
   );
 }
 
+// TODO: Criar error boundaries para poder tratar erros da aplicação, dando feedback visual conduzindo a uma página de erro ou com mensagem através de toasts por exemplo.
+
 export default App;

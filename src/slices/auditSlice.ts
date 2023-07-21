@@ -32,6 +32,7 @@ const auditSlice = createSlice({
       .addCase(createCard.fulfilled, (state, { payload }) => {
         state.audits = [...state.audits, payload.audit];
       });
+    // TECH: Esses cases que usam as actions de cards permitem atualização instantânea das audits na store
   },
 });
 

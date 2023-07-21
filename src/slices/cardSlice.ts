@@ -69,4 +69,8 @@ const cardSlice = createSlice({
   },
 });
 
+// TECH: A abordagem com createAsyncThunk facilita com que a aplicação escale, pois temos controle direto do ciclo de vida das Promises.
+// Ao poder adicionar status em diversas entidades na store e em diferentes níveis dos objetos, podemos manter alta responsividade na UI.
+// Se precisarmos de utilizar as entidades em widgets, por exemplo, garantimos que a demora ou a falha de alguma não interrompa o uso das demais.
+
 export default cardSlice;

@@ -19,6 +19,7 @@ const AuditList = ({ audits }: AuditListProps) => {
 
   // TODO: A lista de auditorias se beneficiaria também de uma barra de buscas e ordenação, idealmente com chamadas na API e debounce
 
+  // TODO: Essa lógica pode ser transferida para um componente de accordion ou removida em caso de uso de UI externa.
   const toggleItem = useCallback(
     (itemId: number) => {
       setOpenItems((prevOpenItems) =>

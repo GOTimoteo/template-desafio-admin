@@ -5,6 +5,7 @@ module.exports = {
     extend: {
       colors: {
         "stone-green": {
+          // TECH: O esquema de cores centralizado facilita mudanças.
           500: "#00A868",
           600: "#166534",
         },

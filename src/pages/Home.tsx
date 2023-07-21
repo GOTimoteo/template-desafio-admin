@@ -14,6 +14,9 @@ import type { FormValues } from "components/CardForm";
 const Home = () => {
   const dispatch = useAppDispatch();
 
+  // TODO: a lógica relacionada aos cards poderia ser removida para um container e deixar apenas a parte de apresentação nesse arquivo.
+  // Mas por enquanto a Home não tem tanto código próprio e não lida com nada além dos cards.
+
   useEffect(() => {
     dispatch(fetchCards());
     dispatch(fetchFeatures());
@@ -23,7 +26,6 @@ const Home = () => {
   const cards = useAppSelector((state) => state.cards.cards);
   const analystId = useAppSelector((state) => state.analysts.loggedAnalyst.id);
 
-  // TODO: usecallback
   const onCreateCard = (formValues: FormValues) => {
     const { user_id, ...metadatas } = formValues;
     const newCard: Omit<Card, "id"> = {
@@ -58,7 +60,7 @@ const Home = () => {
         card: newCard,
         audit: {
           createdAt: new Date().toISOString(),
-          type: "status_alterado",
+          type: "status_alterado", // TODO: centralizar variáveis hardcoded em dictionaries para facilitar entendimento e alteração das regras de negócio
           before: card,
           after: newCard,
           requestedBy: analystId,

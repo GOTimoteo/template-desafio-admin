@@ -27,6 +27,7 @@ const UserList = ({ users }: UserListProps) => {
     user.email.toLowerCase().includes(filterEmail.toLowerCase())
   );
 
+  // TODO: Essa lógica pode ser transferida para um componente de accordion ou removida em caso de uso de UI externa.
   const toggleItem = useCallback(
     (itemId: number) => {
       setOpenItems((prevOpenItems) =>

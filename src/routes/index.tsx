@@ -20,7 +20,7 @@ const Router = () => {
               <Route element={<RequireN2 />}>
                 <Route path={routeNames.AUDITS} element={<AuditsPage />} />
               </Route>
-              {/* <Route path="*" element={<NotFoundPage />} /> */}
+              {/* TODO: <Route path="*" element={<NotFoundPage />} /> */}
             </Route>
             <Route path={routeNames.LOGIN} element={<LoginPage />} />
           </Route>

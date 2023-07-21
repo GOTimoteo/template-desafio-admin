@@ -15,7 +15,7 @@ interface EditableCardProps {
   card: Card;
   onCreateCard: (formValues: FormValues) => void;
   onCardStatusChange: (card: Card, newStatus: Card["status"]) => void;
-  onNameChange: (card: Card, name: Card["metadatas"]["name"]) => void;
+  onNameChange: (card: Card, name: Card["metadatas"]["name"]) => void; // lookup types são utilizados sempre que possível para evitar erros em futuras mudanças
   onDeleteCard: (card: Card) => void;
   readOnly?: false;
 }
@@ -24,6 +24,8 @@ interface ReadOnlyCardProps {
   card: Card;
   readOnly: true;
 }
+
+// TECH: As props do Card são tipadas com Discriminated Unions, permitindo diferentes conjuntos de props caso o card seja editável ou somente leitura.
 
 type CardProps = EditableCardProps | ReadOnlyCardProps;
 
@@ -45,6 +47,7 @@ const Card = (props: CardProps) => {
     setIsNameChanged(displayName !== name);
   }, [displayName, setIsNameChanged, name]);
 
+  // TODO: As ações irreversíveis, como aprovar, desaprovar e deletar devem ter uma modal ou outro botão de confirmação.
   return (
     <div
       key={id}
@@ -91,6 +94,7 @@ const Card = (props: CardProps) => {
         )}
       </div>
       <div className="pl-6 text-gray-700 text-base text-left">
+        {/* TODO: Todas as estilizações de texto e cores de elementos devem ser centralizadas, para facilitar a mudança de padrões gerais e criação de temas diferentes */}
         <span className="font-semibold">{user_id}</span> |{" "}
         {!props.readOnly ? (
           <input

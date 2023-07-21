@@ -22,8 +22,9 @@ export const useAuth = () => useContext(AuthContext);
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const dispatch = useAppDispatch();
   const { analysts } = useAppSelector((state) => state.analysts);
-  const { loggedAnalyst } = useAppSelector((state) => state.analysts); // TODO: passar a loggedAnalyst ao provider no lugar da auth após persistir estado
-  const [auth, setAuth] = useLocalStorage("auth"); // TODO: remove localstorage and add redux-persist
+  const { loggedAnalyst } = useAppSelector((state) => state.analysts); // TODO: passar a loggedAnalyst ao provider no lugar da auth após passar o login para o backend
+  const [auth, setAuth] = useLocalStorage("auth");
+  // TODO: remover o localstorage após o login ser passado para o backend. O Front irá gerenciar a autenticação através de httpOnly cookies que expiram.
 
   const login = (email: string, password: string) => {
     const analyst = analysts.find((analyst) => analyst.email === email);
@@ -74,11 +75,15 @@ export const RequireAuth = () => {
   return <Outlet />;
 };
 
+// TECH: Essa abordagem permite fácil bloqueio de usuários a rotas, centralizando a regra negocial e facilitando escala
+
 export const RequireN2 = () => {
   const { analyst } = useAuth();
   const location = useLocation();
 
   if (!analyst.roles.includes("n2")) {
+    // TODO: centralizar variáveis hardcoded em dictionaries para facilitar entendimento e alteração das regras de negócio
+    // TODO: o redirect poderia ser para uma página de acesso não autorizado, para ter feedback ao usuário e evitar confusão.
     return (
       <Navigate
         to={{ pathname: routeNames.LOGIN }}

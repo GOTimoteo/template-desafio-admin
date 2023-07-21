@@ -13,6 +13,8 @@ interface CardFormProps {
   onCreateCard: (formValues: FormValues) => void;
 }
 
+// TODO: realizar validações no form. Utilizar react-hook-forms e yup para melhor controle.
+
 const CardForm = ({ onCreateCard }: CardFormProps) => {
   const [formValues, setFormValues] = useState<FormValues>({} as FormValues);
   const [selectedOption, setSelectedOption] = useState("");

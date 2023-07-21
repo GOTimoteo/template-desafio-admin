@@ -31,7 +31,7 @@ export const makeSelectCardEnabledUsers = () => {
   const selectFeatures = (state: RootState) => state.features.features;
   const selectCardFeatures = createSelector(
     [selectFeatures],
-    (features) => features.find(({ name }) => name === "card")?.id
+    (features) => features.find(({ name }) => name === "card")?.id // TODO: centralizar variáveis hardcoded em dictionaries para facilitar entendimento e alteração das regras de negócio
   );
 
   return createSelector([selectUsers, selectCardFeatures], (users, features) =>
@@ -40,5 +40,8 @@ export const makeSelectCardEnabledUsers = () => {
     )
   );
 };
+
+// TECH: essa factory function memoiza os parâmetros e torna operações pesadas mais leves.
+// Os selectors devem ser aninhados dessa forma para memoizar valores aninhados corretamente.
 
 export default userSlice;
