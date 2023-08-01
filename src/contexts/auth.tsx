@@ -62,7 +62,7 @@ export const RequireAuth = () => {
   const { analyst } = useAuth();
   const location = useLocation();
 
-  if (analyst && Object.keys(analyst).length === 0) {
+  if (!analyst || Object.keys(analyst).length === 0) {
     return (
       <Navigate
         to={{ pathname: routeNames.LOGIN }}
